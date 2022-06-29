@@ -32,7 +32,7 @@
                     placeholder="CRMV"
                     value="{{$dados['crmv']}}"
                 />
-                <label for="email">CRMV</label>
+                <label for="crmv">CRMV</label>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
                     placeholder="Especialidade"
                     value="{{$dados['especialidade']}}"
                 />
-                <label for="email">Especialidade</label>
+                <label for="especialidade">Especialidade</label>
             </div>
         </div>
     </div>
