@@ -1,19 +1,18 @@
 <!-- Herda o layout padrão definido no template "main" -->
-@extends('templates.main', ['titulo' => "Veterinários", 'rota' => "veterinarios.create"])
+@extends('templates.main', ['titulo' => "Especialidades", 'rota' => "especialidades.create"])
 <!-- Preenche o conteúdo da seção "titulo" -->
-@section('titulo') Veterinários @endsection
+@section('titulo') Especialidades @endsection
 <!-- Preenche o conteúdo da seção "conteudo" -->
 @section('conteudo')
-
 
     <div class="row">
         <div class="col">
             
             <!-- Utiliza o componente "datalist" criado -->
-            <x-datalistVet
-                :header="['ID', 'NOME', 'CRMV', 'ESPECIALIDADE', 'AÇÕES']" 
+            <x-datalistEsp
+                :header="['ID', 'NOME', 'DESCRIÇÃO', 'AÇÕES']" 
                 :data="$dados"
-                :hide="[true, false, true, false, true]" 
+                :hide="[true, false, true, false]" 
             />
 
         </div>

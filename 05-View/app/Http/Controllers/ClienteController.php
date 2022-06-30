@@ -3,32 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cliente;
 
 class ClienteController extends Controller {
     
-    
-    public $clientes = [[
-        "id" => 1,
-        "nome" => "Gil Eduardo",
-        "email" => "gil@gmail.com"
-    ]];
-
-    public function __construct() {
-        $aux = session('clientes');
-
-        if(!isset($aux)) {
-            session(['clientes' => $this->clientes]);
-        }
-    }
-    
     public function index() {
-        
-        $dados = session('clientes');
-        $clinica = "VetClin DWII";
-
-        // Passa um array "dados" com os "clientes" e a string "clínicas"
-        return view('clientes.index', compact(['dados', 'clinica']));
-        // return view('cliente.index')->with('dados', $dados)->with('clinica', $clinica);
+        $dados = Cliente::all();
+        return view('clientes.index', compact('dados'));
     }
 
     public function create() {
@@ -37,77 +18,58 @@ class ClienteController extends Controller {
     }
 
    public function store(Request $request) {
-        
-        $aux = session('clientes');
-        $ids = array_column($aux, 'id');
 
-        if(count($ids) > 0) {
-            $new_id = max($ids) + 1;
-        }
-        else {
-            $new_id = 1;   
-        }
-
-        $novo = [
-            "id" => $new_id,
-            "nome" => $request->nome,
-            "email" => $request->email
-        ];
-
-        array_push($aux, $novo);
-        session(['clientes' => $aux]);
+        Cliente::create([
+            'nome' => $request->nome,
+            'email' => $request->email,
+        ]);
 
         return redirect()->route('clientes.index');
     }
 
     public function show($id) {
-        
-        $aux = session('clientes');
-        
-        $index = array_search($id, array_column($aux, 'id'));
 
-        $dados = $aux[$index];
-
-        return view('clientes.show', compact('dados'));
     }
 
     public function edit($id) {
 
-        $aux = session('clientes');
-            
-        $index = array_search($id, array_column($aux, 'id'));
+        $dados = Cliente::find($id);
 
-        $dados = $aux[$index];    
+        if(!isset($dados)) { 
+            return "<h1>ID: $id não encontrado!</h1>"; 
+        }     
 
         return view('clientes.edit', compact('dados'));        
     }
 
     public function update(Request $request, $id) {
-        
-        $aux = session('clientes');
-        
-        $index = array_search($id, array_column($aux, 'id'));
 
-        $novo = [
-            "id" => $id,
-            "nome" => $request->nome,
-            "email" => $request->email,
-        ];
+        $obj = Cliente::find($id);
 
-        $aux[$index] = $novo;
-        session(['clientes' => $aux]);
+        if(!isset($obj)) { 
+            return "<h1>ID: $id não encontrado!"; 
+        }
+
+        $obj->fill([
+            'nome' => $request->nome,
+            'email' => $request->email,
+        ]);
+
+        $obj->save();
 
         return redirect()->route('clientes.index');
+        
     }
 
     public function destroy($id) {
-        $aux = session('clientes');
-        
-        $index = array_search($id, array_column($aux, 'id')); 
 
-        unset($aux[$index]);
+        $obj = Cliente::find($id);
 
-        session(['clientes' => $aux]);
+        if(!isset($obj)) {
+            return "<h1>ID: $id não encontrado!"; 
+        }
+
+        $obj->destroy();
 
         return redirect()->route('clientes.index');
     }
