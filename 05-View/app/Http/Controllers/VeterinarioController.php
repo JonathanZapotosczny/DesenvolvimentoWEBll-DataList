@@ -9,7 +9,9 @@ use App\Models\Especialidade;
 class VeterinarioController extends Controller {
 
     public function index() {
-        $dados = Veterinario::all();
+        $dados[0] = Veterinario::all();
+        $dados[1] = Especialidade::all();
+
         return view('veterinarios.index', compact('dados'));
     }
 
@@ -37,12 +39,13 @@ class VeterinarioController extends Controller {
     public function edit($id) {
 
         $dados = Veterinario::find($id);
+        $esp = Especialidade::all();
 
         if(!isset($dados)) { 
             return "<h1>ID: $id não encontrado!</h1>"; 
         }     
 
-        return view('veterinarios.edit', compact('dados'));        
+        return view('veterinarios.edit', compact('dados','esp'));        
     }
 
     public function update(Request $request, $id) {
@@ -54,7 +57,7 @@ class VeterinarioController extends Controller {
         }
 
         $obj->fill([
-            'crmv' => $request->nome,
+            'crmv' => $request->crmv,
             'nome' => $request->nome,
             'id_especialidade' => $request->id_especialidade,
         ]);

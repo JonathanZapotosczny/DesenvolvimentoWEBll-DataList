@@ -42,17 +42,6 @@ class EspecialidadeController extends Controller {
         return view('especialidades.edit', compact('dados'));        
     }
 
-    public function especialidade() {
-
-        $dados = Especialidade::all;
-
-        if(!isset($dados)) { 
-            return "<h1>ID: $id não encontrado!</h1>"; 
-        }     
-
-        return view('veterinario.create', compact('dados'));        
-    }
-
     public function update(Request $request, $id) {
 
         $obj = Especialidade::find($id);
