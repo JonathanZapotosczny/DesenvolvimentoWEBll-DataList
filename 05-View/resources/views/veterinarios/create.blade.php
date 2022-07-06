@@ -36,28 +36,17 @@
                 </div>
             </div>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Opções</label>
-            </div>
-            <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Escolher...</option>
-                <option value="1">Um</option>
-                <option value="2">Dois</option>
-                <option value="3">Três</option>
-            </select>
-        </div>
         <div class="row">
-            <div class="col" >
-                <div class="form-floating mb-3">
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        name="especialidade" 
-                        placeholder="Especialidade"
-                        value="{{old('especialidade')}}"
-                    />
-                    <label for="especialidade">Especialidade</label>
+            <div class="col">
+                <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01" >Especialidade</label>
+                    <select name="id_especialidade" class="form-select">
+                        @foreach ($esp as $item)
+                        <option value="{{$item->id}}" @if($item->id == old('id_especialidade')) selected="true" @endif>
+                            {{ $item->nome }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

@@ -63,13 +63,7 @@ class ClienteController extends Controller {
 
     public function destroy($id) {
 
-        $obj = Cliente::find($id);
-
-        if(!isset($obj)) {
-            return "<h1>ID: $id não encontrado!"; 
-        }
-
-        $obj->destroy();
+        Cliente::destroy($id);
 
         return redirect()->route('clientes.index');
     }

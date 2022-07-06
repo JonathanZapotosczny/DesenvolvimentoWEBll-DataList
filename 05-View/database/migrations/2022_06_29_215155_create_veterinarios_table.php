@@ -17,7 +17,7 @@ class CreateVeterinariosTable extends Migration
             $table->id();
             $table->integer('crmv')->unique();
             $table->string('nome');
-            $table->bigInteger('id_especialidade')->unsigned();
+            $table->unsignedBigInteger('id_especialidade');
             $table->foreign('id_especialidade')->references('id')->on('especialidades');
             $table->timestamps();
             $table->softDeletes();

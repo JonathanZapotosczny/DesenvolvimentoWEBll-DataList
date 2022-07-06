@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Veterinario;
+use App\Models\Especialidade;
 
 class VeterinarioController extends Controller {
 
@@ -14,13 +15,14 @@ class VeterinarioController extends Controller {
 
     public function create() {
 
-        return view('veterinarios.create');
+        $esp = Especialidade::all();
+        return view('veterinarios.create', compact('esp'));
     }
 
    public function store(Request $request) {
 
         Veterinario::create([
-            'crmv' => $request->nome,
+            'crmv' => $request->crmv,
             'nome' => $request->nome,
             'id_especialidade' => $request->id_especialidade,
         ]);
@@ -65,13 +67,7 @@ class VeterinarioController extends Controller {
 
     public function destroy($id) {
 
-        $obj = Veterinario::find($id);
-
-        if(!isset($obj)) {
-            return "<h1>ID: $id não encontrado!"; 
-        }
-
-        $obj->destroy();
+        Veterinario::destroy($id);
 
         return redirect()->route('veterinarios.index');
     }
